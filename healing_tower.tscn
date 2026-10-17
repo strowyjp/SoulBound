@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://bume6rh4spkvf"]
+
+[ext_resource type="Texture2D" uid="uid://bxi7igxaq46ml" path="res://assets/Texture/TX Props.png" id="1_n7sxg"]
+[ext_resource type="Script" uid="uid://dqub26v2vnd67" path="res://scripts/healing_tower.gd" id="1_xxy7u"]
+[ext_resource type="FontFile" uid="uid://csqmbla368eoj" path="res://Minecraft.ttf" id="3_85d74"]
+[ext_resource type="Texture2D" uid="uid://c5e805q6xksp" path="res://assets/UI/Japanese_Hinoki_wood_button.png" id="4_p6qqt"]
+[ext_resource type="AudioStream" uid="uid://brwdmrbpfyqdy" path="res://assets/Audio/Start.mp3" id="5_h6srj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g7b7a"]
+
+[sub_resource type="Theme" id="Theme_3ij58"]
+default_font = ExtResource("3_85d74")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g7b7a"]
+texture = ExtResource("4_p6qqt")
+expand_margin_left = 10.0
+expand_margin_top = 23.0
+expand_margin_right = 10.0
+expand_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p6qqt"]
+texture = ExtResource("4_p6qqt")
+expand_margin_left = 10.0
+expand_margin_top = 23.0
+expand_margin_right = 10.0
+expand_margin_bottom = 20.0
+modulate_color = Color(0.7021143, 0.70211434, 0.7021143, 1)
+
+[sub_resource type="Theme" id="Theme_g7b7a"]
+default_font = ExtResource("3_85d74")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gyc6d"]
+texture = ExtResource("4_p6qqt")
+expand_margin_left = 12.0
+expand_margin_top = 25.0
+expand_margin_right = 10.0
+expand_margin_bottom = 22.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mvo2c"]
+texture = ExtResource("4_p6qqt")
+expand_margin_left = 12.0
+expand_margin_top = 25.0
+expand_margin_right = 10.0
+expand_margin_bottom = 22.0
+modulate_color = Color(0.7019608, 0.7019608, 0.7019608, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xxy7u"]
+radius = 13.499634
+height = 39.99963
+
+[sub_resource type="Gradient" id="Gradient_h6srj"]
+offsets = PackedFloat32Array(0, 0.35, 0.65, 1)
+colors = PackedColorArray(0.101960786, 0.7019608, 1, 1, 0.101960786, 0.7019608, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8i5jd"]
+gradient = SubResource("Gradient_h6srj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g7b7a"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 15.0
+gravity = Vector3(0, -90, 0)
+color_initial_ramp = SubResource("GradientTexture1D_8i5jd")
+turbulence_enabled = true
+turbulence_noise_strength = 3.0
+
+[sub_resource type="Gradient" id="Gradient_p6qqt"]
+offsets = PackedFloat32Array(0, 0.35, 0.65, 1)
+colors = PackedColorArray(0.1764706, 0.011764706, 0.25882354, 1, 0.1764706, 0.011764706, 0.25882354, 1, 1, 0.84313726, 0, 1, 1, 0.84313726, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nknyy"]
+gradient = SubResource("Gradient_p6qqt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mvo2c"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 35.0
+gravity = Vector3(0, 0, 0)
+color_initial_ramp = SubResource("GradientTexture1D_nknyy")
+turbulence_enabled = true
+turbulence_noise_strength = 3.0
+
+[node name="Statue" type="Area2D" unique_id=579159760]
+y_sort_enabled = true
+script = ExtResource("1_xxy7u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1128863492]
+position = Vector2(0, -9.536743e-07)
+scale = Vector2(7, 7)
+shape = SubResource("CircleShape2D_g7b7a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=17111220]
+y_sort_enabled = true
+texture = ExtResource("1_n7sxg")
+offset = Vector2(0, -15)
+region_enabled = true
+region_rect = Rect2(445, 21, 37, 72)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=456595927]
+offset = Vector2(1400, 250)
+transform = Transform2D(1, 0, 0, 1, 1400, 250)
+
+[node name="rest" type="Button" parent="CanvasLayer" unique_id=2068266551]
+offset_left = -64.0
+offset_top = 22.0
+offset_right = -28.0
+offset_bottom = 38.0
+scale = Vector2(2, 2.2)
+theme = SubResource("Theme_3ij58")
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_g7b7a")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_p6qqt")
+text = "Rest"
+
+[node name="UpgradeLevel" type="Button" parent="CanvasLayer" unique_id=1255232432]
+offset_left = -184.0
+offset_top = -42.0
+offset_right = -85.0
+offset_bottom = -22.0
+scale = Vector2(2, 2.2)
+theme = SubResource("Theme_g7b7a")
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_gyc6d")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mvo2c")
+text = "Player level "
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1686976539]
+position = Vector2(0, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1157410523]
+position = Vector2(0, 2.5)
+rotation = -1.571162
+shape = SubResource("CapsuleShape2D_xxy7u")
+debug_color = Color(0, 0, 0, 0.42)
+
+[node name="HealingParticles" type="GPUParticles2D" parent="." unique_id=1216223005]
+z_index = 1
+position = Vector2(0, -22)
+emitting = false
+amount = 60
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_g7b7a")
+
+[node name="UpgradeParticles" type="GPUParticles2D" parent="." unique_id=420861426]
+z_index = 1
+position = Vector2(0, -22)
+emitting = false
+amount = 60
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_mvo2c")
+
+[node name="HealAudio" type="AudioStreamPlayer2D" parent="." unique_id=49008532]
+process_mode = 3
+stream = ExtResource("5_h6srj")
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="pressed" from="CanvasLayer/rest" to="." method="_on_rest_pressed"]
+[connection signal="pressed" from="CanvasLayer/UpgradeLevel" to="." method="_on_upgrade_lvl_pressed"]

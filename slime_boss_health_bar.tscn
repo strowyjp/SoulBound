@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://b6pckw43gc24d"]
+
+[ext_resource type="Texture2D" uid="uid://b4yhysn74e6m1" path="res://assets/UI/Slime_boss_health_bar.png" id="1_d6apy"]
+[ext_resource type="Script" uid="uid://bxrj382p85p6x" path="res://scripts/slime_boss_health_bar.gd" id="1_vlqkm"]
+
+[sub_resource type="Gradient" id="Gradient_awxdy"]
+offsets = PackedFloat32Array(0.5)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d6apy"]
+gradient = SubResource("Gradient_awxdy")
+width = 120
+height = 4
+
+[sub_resource type="Gradient" id="Gradient_d6apy"]
+offsets = PackedFloat32Array(0.5)
+colors = PackedColorArray(9.62615e-08, 0.29966798, 0.34668657, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_awxdy"]
+gradient = SubResource("Gradient_d6apy")
+width = 120
+height = 4
+
+[node name="SlimeBossHealthBar" type="CanvasLayer" unique_id=1868729180 groups=["boss_health_bar"]]
+follow_viewport_enabled = true
+script = ExtResource("1_vlqkm")
+metadata/_edit_vertical_guides_ = [-37.0]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1317977129]
+offset_left = 4.0
+offset_top = 15.0
+offset_right = 124.0
+offset_bottom = 19.0
+color = Color(0.12010058, 0.12010058, 0.12010058, 1)
+
+[node name="DamageProgressBar" type="TextureProgressBar" parent="." unique_id=1142774270]
+offset_right = 120.0
+offset_bottom = 40.0
+value = 100.0
+fill_mode = 6
+texture_progress = SubResource("GradientTexture2D_d6apy")
+texture_progress_offset = Vector2(4, 15)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1607360733]
+offset_right = 40.0
+offset_bottom = 40.0
+value = 100.0
+fill_mode = 6
+texture_over = ExtResource("1_d6apy")
+texture_progress = SubResource("GradientTexture2D_awxdy")
+texture_progress_offset = Vector2(4, 15)

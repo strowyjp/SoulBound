@@ -1,0 +1,236 @@
+[gd_scene format=3 uid="uid://de4tptjl0lcln"]
+
+[ext_resource type="Texture2D" uid="uid://5rpqerfohaly" path="res://assets/UI/Japanese_Hinoki_wood_level_upgrade.png" id="1_8tk7k"]
+[ext_resource type="Script" uid="uid://lxa8hdu3xrss" path="res://scripts/upgrade_player_level.gd" id="1_nknyy"]
+[ext_resource type="FontFile" uid="uid://csqmbla368eoj" path="res://Minecraft.ttf" id="2_8tk7k"]
+[ext_resource type="AudioStream" uid="uid://cfwftrc088slc" path="res://assets/Audio/Upgrade.mp3" id="5_7cqds"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g7b7a"]
+
+[node name="UpgradePlayerLevel" type="CanvasLayer" unique_id=1499203980]
+offset = Vector2(448, 30)
+scale = Vector2(3, 3)
+transform = Transform2D(3, 0, 0, 3, 448, 30)
+script = ExtResource("1_nknyy")
+metadata/_edit_vertical_guides_ = [-84.0]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1189552896]
+offset_right = 200.0
+offset_bottom = 200.0
+texture = ExtResource("1_8tk7k")
+
+[node name="Label" type="Label" parent="NinePatchRect" unique_id=900386566]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 25.0
+offset_right = 172.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+text = "Player level"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="level" type="Label" parent="NinePatchRect" unique_id=1760034889]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 53.0
+offset_right = 173.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="power" type="Button" parent="NinePatchRect" unique_id=1914837801]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 150.0
+offset_right = 141.0
+offset_bottom = 182.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g7b7a")
+text = "Power"
+
+[node name="Jutsu" type="Button" parent="NinePatchRect" unique_id=1497759096]
+layout_mode = 0
+offset_left = 103.0
+offset_top = 150.0
+offset_right = 191.0
+offset_bottom = 182.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g7b7a")
+text = "Jutsu"
+
+[node name="information" type="Label" parent="NinePatchRect" unique_id=471816861]
+layout_mode = 0
+offset_left = 64.333336
+offset_top = 96.666664
+offset_right = 172.33334
+offset_bottom = 165.23813
+scale = Vector2(0.7, 0.7)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+text = "10 upgrades
+remain. Forge
+your path."
+horizontal_alignment = 1
+
+[node name="power" type="NinePatchRect" parent="." unique_id=379471610]
+visible = false
+offset_right = 200.0
+offset_bottom = 200.0
+texture = ExtResource("1_8tk7k")
+
+[node name="Label" type="Label" parent="power" unique_id=1359679959]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 25.0
+offset_right = 172.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+text = "Power level"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="level" type="Label" parent="power" unique_id=1570974797]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 53.0
+offset_right = 173.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="upgrade" type="Button" parent="power" unique_id=1245622550]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 150.0
+offset_right = 141.0
+offset_bottom = 182.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g7b7a")
+text = "Upgrade"
+
+[node name="close" type="Button" parent="power" unique_id=2051569692]
+layout_mode = 0
+offset_left = 103.0
+offset_top = 150.0
+offset_right = 191.0
+offset_bottom = 182.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g7b7a")
+text = "Close
+"
+
+[node name="information" type="Label" parent="power" unique_id=236376247]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 93.0
+offset_right = 225.0
+offset_bottom = 204.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+text = "Damage: 7 --> 13
+Crit rate: 0.07 --> 0.13
+Crit damage:
+[1.3 , 1.5] --> [1.7 , 2.0]
+
+Cost: 10"
+
+[node name="Jutsu" type="NinePatchRect" parent="." unique_id=1239721375]
+visible = false
+offset_right = 200.0
+offset_bottom = 200.0
+texture = ExtResource("1_8tk7k")
+
+[node name="Label" type="Label" parent="Jutsu" unique_id=1433595294]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 25.0
+offset_right = 172.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+text = "Jutsu level"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="level" type="Label" parent="Jutsu" unique_id=325027148]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 53.0
+offset_right = 173.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JutsuUpgrade" type="Button" parent="Jutsu" unique_id=1781368780]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 150.0
+offset_right = 141.0
+offset_bottom = 182.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g7b7a")
+text = "Upgrade"
+
+[node name="close" type="Button" parent="Jutsu" unique_id=283549766]
+layout_mode = 0
+offset_left = 103.0
+offset_top = 150.0
+offset_right = 191.0
+offset_bottom = 182.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g7b7a")
+text = "Close"
+
+[node name="information" type="Label" parent="Jutsu" unique_id=206964867]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 93.0
+offset_right = 230.0
+offset_bottom = 204.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_8tk7k")
+text = "Speed: 100 --> 107
+Attack_cooldown:
+1.5 --> 1.3
+Hp: 100 --> 130
+
+Cost: 10"
+
+[node name="UpgradeAudio" type="AudioStreamPlayer2D" parent="." unique_id=656635605]
+process_mode = 3
+stream = ExtResource("5_7cqds")
+volume_db = 24.0
+bus = &"SFX"
+
+[connection signal="pressed" from="NinePatchRect/power" to="." method="_on_power_pressed"]
+[connection signal="pressed" from="NinePatchRect/Jutsu" to="." method="_on_jutsu_pressed"]
+[connection signal="pressed" from="power/upgrade" to="." method="_on_upgrade_pressed"]
+[connection signal="pressed" from="power/close" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="Jutsu/JutsuUpgrade" to="." method="_on_jutsu_upgrade_pressed"]
+[connection signal="pressed" from="Jutsu/close" to="." method="_on_close_pressed"]

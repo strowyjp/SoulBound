@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://q5gsek0sifi3"]
+
+[ext_resource type="Script" uid="uid://d3t82fbo271rd" path="res://scripts/purple_hitodama.gd" id="1_t8oth"]
+
+[sub_resource type="Gradient" id="Gradient_iosp8"]
+offsets = PackedFloat32Array(0, 0.3, 0.6, 1)
+colors = PackedColorArray(0.1764706, 0.011764706, 0.25882354, 1, 0.11207495, 0.012920001, 0.1680183, 0.5, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gyc6d"]
+gradient = SubResource("Gradient_iosp8")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g7b7a"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -20, 0)
+
+[sub_resource type="Gradient" id="Gradient_t8oth"]
+offsets = PackedFloat32Array(0, 0.2, 0.6, 1)
+colors = PackedColorArray(0.078431375, 0.0627451, 0.30980393, 1, 0.2901961, 0.14901961, 0.8392157, 1, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6qx4q"]
+gradient = SubResource("Gradient_t8oth")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g7b7a"]
+radius = 20.0
+
+[node name="PurpleHitodama" type="GPUParticles2D" unique_id=1775590365]
+texture = SubResource("GradientTexture2D_gyc6d")
+process_material = SubResource("ParticleProcessMaterial_g7b7a")
+script = ExtResource("1_t8oth")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2053744268]
+energy = 2.0
+texture = SubResource("GradientTexture2D_6qx4q")
+texture_scale = 3.0
+
+[node name="HitBox" type="Area2D" parent="." unique_id=1877777533]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=161571609]
+shape = SubResource("CircleShape2D_g7b7a")
+debug_color = Color(0, 0, 0, 0.42)

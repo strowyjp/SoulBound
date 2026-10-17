@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://c768s1lj2kyoc"]
+
+[ext_resource type="Script" uid="uid://bpa5e3hdxe5bu" path="res://scripts/final_boss_health_bar.gd" id="1_ku61s"]
+[ext_resource type="Texture2D" uid="uid://bsnbuvdmlqkh6" path="res://assets/UI/Final_boss_health_bar.png" id="2_s28n3"]
+
+[sub_resource type="Gradient" id="Gradient_5vyr3"]
+offsets = PackedFloat32Array(0.5)
+colors = PackedColorArray(0, 0.119716085, 0.12878782, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gyc6d"]
+gradient = SubResource("Gradient_5vyr3")
+width = 120
+height = 5
+
+[sub_resource type="Gradient" id="Gradient_1hpw8"]
+offsets = PackedFloat32Array(0.5)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6qx4q"]
+gradient = SubResource("Gradient_1hpw8")
+width = 120
+height = 5
+
+[sub_resource type="Gradient" id="Gradient_howgd"]
+offsets = PackedFloat32Array(0.5)
+colors = PackedColorArray(0.36040887, 0.37943143, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g7b7a"]
+gradient = SubResource("Gradient_howgd")
+width = 120
+height = 5
+
+[node name="FinalBossHealthBar" type="CanvasLayer" unique_id=112413826]
+script = ExtResource("1_ku61s")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=762727330]
+offset_left = 4.0
+offset_top = 15.0
+offset_right = 124.0
+offset_bottom = 20.0
+texture = SubResource("GradientTexture2D_gyc6d")
+
+[node name="DamageProgressBar" type="TextureProgressBar" parent="." unique_id=468041970]
+offset_right = 40.0
+offset_bottom = 40.0
+value = 100.0
+fill_mode = 6
+texture_progress = SubResource("GradientTexture2D_6qx4q")
+texture_progress_offset = Vector2(4, 15)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=932622512]
+offset_right = 40.0
+offset_bottom = 40.0
+value = 100.0
+fill_mode = 6
+texture_over = ExtResource("2_s28n3")
+texture_progress = SubResource("GradientTexture2D_g7b7a")
+texture_progress_offset = Vector2(4, 15)

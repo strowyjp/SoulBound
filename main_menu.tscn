@@ -1,0 +1,347 @@
+[gd_scene format=3 uid="uid://c7l6tsu2x5jfe"]
+
+[ext_resource type="Script" uid="uid://ddnjnp3cwallg" path="res://scripts/main_menu.gd" id="1_ekxnf"]
+[ext_resource type="PackedScene" uid="uid://bda8xuh64vg0k" path="res://scenes/world.tscn" id="2_8ln24"]
+[ext_resource type="FontFile" uid="uid://csqmbla368eoj" path="res://Minecraft.ttf" id="2_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://bkwfcgeshthon" path="res://assets/Texture/Moon.png" id="2_wu84c"]
+[ext_resource type="AudioStream" uid="uid://drc7dkhrosqx6" path="res://assets/Audio/not-jam-music-pack-zip_ogg/NotJamMusicPack_ogg/Loopable_ogg/ChillMenu_Loopable.ogg" id="5_8ln24"]
+
+[sub_resource type="Gradient" id="Gradient_bqqt6"]
+offsets = PackedFloat32Array(0, 0.7, 1)
+colors = PackedColorArray(0.72156864, 0.84705883, 0.9098039, 1, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g7b7a"]
+gradient = SubResource("Gradient_bqqt6")
+width = 250
+height = 250
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_wu84c"]
+offsets = PackedFloat32Array(0, 0.6, 0.6, 1)
+colors = PackedColorArray(0.9999996, 0.9546482, 0.8826052, 1, 1, 0.9529412, 0.88235295, 1, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gyc6d"]
+gradient = SubResource("Gradient_wu84c")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_rtw2f"]
+offsets = PackedFloat32Array(0, 0.15, 0.25, 1)
+colors = PackedColorArray(0.9935861, 0.9935861, 0.9935861, 1, 1, 1, 1, 0.63231665, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6qx4q"]
+gradient = SubResource("Gradient_rtw2f")
+width = 250
+height = 250
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g7b7a"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 100, 1)
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 1.5
+
+[sub_resource type="Shader" id="Shader_bqqt6"]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise_texture : repeat_enable;
+uniform vec4 fog_color : source_color = vec4(1.0, 1.0, 1.0, 0.6); // لون أبيض نص شفاف للغيوم
+uniform vec2 speed1 = vec2(12.0, 0.5); // حركة أفقية أسرع مع اتجاه الرياح
+uniform vec2 speed2 = vec2(-8.0, 0.2);
+
+varying vec2 world_pos;
+
+void vertex() {
+	world_pos = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+}
+
+void fragment() {
+	vec2 uv1 = world_pos * 0.001 + speed1 * 0.001 * TIME;
+	vec2 uv2 = world_pos * 0.0007 + speed2 * 0.001 * TIME;
+	float noise1 = texture(noise_texture, uv1).r;
+	float noise2 = texture(noise_texture, uv2).r;
+	float combined_fog = noise1 * noise2 * 1.4;
+	float fog_alpha = smoothstep(0.1, 0.6, combined_fog);
+	
+	// حذف السطر المكرر
+	COLOR = vec4(fog_color.rgb, fog_alpha * fog_color.a * COLOR.a);
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8ln24"]
+noise_type = 5
+frequency = 0.015
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wu84c"]
+noise = SubResource("FastNoiseLite_8ln24")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqqt6"]
+shader = SubResource("Shader_bqqt6")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_wu84c")
+shader_parameter/fog_color = Color(0.65, 0.7, 0.8, 0.25)
+shader_parameter/speed1 = Vector2(-8, 4)
+shader_parameter/speed2 = Vector2(-8, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqqt6"]
+content_margin_left = 2.0
+content_margin_top = 15.0
+content_margin_right = 2.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 0.4)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+expand_margin_left = 10.0
+expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wu84c"]
+content_margin_left = 5.0
+content_margin_top = 15.0
+content_margin_right = 5.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 0.4)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+expand_margin_left = 10.0
+expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ln24"]
+content_margin_left = 2.0
+content_margin_top = 15.0
+content_margin_right = 2.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 0.4)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+expand_margin_left = 10.0
+expand_margin_right = 5.0
+
+[sub_resource type="Gradient" id="Gradient_8ln24"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0.4)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hqkgv"]
+gradient = SubResource("Gradient_8ln24")
+
+[node name="MainMenu" type="CanvasLayer" unique_id=866825382]
+script = ExtResource("1_ekxnf")
+game_scene = ExtResource("2_8ln24")
+
+[node name="BackGround" type="ColorRect" parent="." unique_id=108000060]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.043137256, 0.05490196, 0.078431375, 1)
+
+[node name="Moon" type="TextureRect" parent="BackGround" unique_id=717770225]
+z_index = 1
+layout_mode = 0
+offset_left = 1.0
+offset_top = 479.0
+offset_right = 41.0
+offset_bottom = 519.0
+scale = Vector2(2, 2)
+texture = ExtResource("2_wu84c")
+
+[node name="PointLight2D" type="TextureRect" parent="BackGround/Moon" unique_id=1863334307]
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_g7b7a")
+
+[node name="Sun" type="TextureRect" parent="BackGround" unique_id=688398493]
+z_index = 1
+layout_mode = 0
+offset_top = 456.0
+offset_right = 64.0
+offset_bottom = 520.0
+scale = Vector2(2, 2)
+texture = SubResource("GradientTexture2D_gyc6d")
+
+[node name="TextureRect" type="TextureRect" parent="BackGround/Sun" unique_id=1980039873]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_6qx4q")
+
+[node name="Stars" type="GPUParticles2D" parent="BackGround" unique_id=903947053]
+position = Vector2(576, 320)
+scale = Vector2(6, 3.5)
+amount = 50
+lifetime = 50.0
+preprocess = 5.0
+visibility_rect = Rect2(-100.47509, -100.43542, 198.82002, 198.71933)
+process_material = SubResource("ParticleProcessMaterial_g7b7a")
+
+[node name="Clouds" type="ColorRect" parent="BackGround" unique_id=137795203]
+material = SubResource("ShaderMaterial_bqqt6")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -968.0
+offset_top = -332.0
+offset_right = -829.40845
+offset_bottom = -249.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(14.2, 8)
+
+[node name="Control" type="Control" parent="." unique_id=1322624467]
+z_index = 10
+layout_mode = 3
+anchors_preset = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1684528889]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 200.0
+offset_right = 346.0
+offset_bottom = 477.0
+theme_override_constants/separation = 20
+
+[node name="StartButton" type="Button" parent="Control/VBoxContainer" unique_id=1677388174]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bqqt6")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_bqqt6")
+text = "START"
+
+[node name="SettingsButton" type="Button" parent="Control/VBoxContainer" unique_id=591810798]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bqqt6")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_wu84c")
+text = "SETTINGS"
+
+[node name="QuitButton" type="Button" parent="Control/VBoxContainer" unique_id=95298175]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bqqt6")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_8ln24")
+text = "QUIT"
+
+[node name="NewGame" type="Button" parent="Control/VBoxContainer" unique_id=1177125816]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bqqt6")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_8ln24")
+text = "New Game"
+
+[node name="Settings" type="Control" parent="." unique_id=1264186465]
+z_index = 10
+layout_mode = 3
+anchors_preset = 0
+offset_left = 768.0
+offset_top = 320.0
+offset_right = 808.0
+offset_bottom = 360.0
+scale = Vector2(2, 2)
+
+[node name="TextureRect" type="TextureRect" parent="Settings" unique_id=1310755323]
+layout_mode = 0
+offset_left = -64.0
+offset_top = -96.0
+offset_right = 66.0
+offset_bottom = 104.0
+texture = SubResource("GradientTexture2D_hqkgv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings" unique_id=1698150950]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -92.0
+offset_right = 32.0
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Music" type="Label" parent="Settings/VBoxContainer" unique_id=1113575422]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bqqt6")
+text = "MUSIC"
+
+[node name="MusicSlider" type="HSlider" parent="Settings/VBoxContainer/Music" unique_id=178253449]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 51.0
+offset_bottom = 43.0
+max_value = 1.0
+step = 0.01
+value = 0.7
+
+[node name="SFX" type="Label" parent="Settings/VBoxContainer" unique_id=23495394]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bqqt6")
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="Settings/VBoxContainer/SFX" unique_id=327976937]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 51.0
+offset_bottom = 43.0
+max_value = 1.0
+step = 0.01
+value = 0.7
+
+[node name="BackButton" type="Button" parent="Settings/VBoxContainer" unique_id=1782512125]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bqqt6")
+text = "BACK"
+
+[node name="Audio" type="AudioStreamPlayer" parent="." unique_id=642227332]
+stream = ExtResource("5_8ln24")
+bus = &"Music"
+
+[connection signal="pressed" from="Control/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="value_changed" from="Settings/VBoxContainer/Music/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="Settings/VBoxContainer/SFX/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="Settings/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c1xrchy01c7dg"]
+
+[ext_resource type="Script" uid="uid://bp75tkp5r3k7a" path="res://scripts/enemy_spowner.gd" id="1_ancs0"]
+[ext_resource type="PackedScene" uid="uid://c75h50ct4k4av" path="res://scenes/slime.tscn" id="2_irrmh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g7b7a"]
+size = Vector2(1000, 1000)
+
+[node name="EnemySpowner" type="Area2D" unique_id=1038732971]
+y_sort_enabled = true
+script = ExtResource("1_ancs0")
+enemy_scene = ExtResource("2_irrmh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1701760307]
+position = Vector2(1114.5, 1487.5)
+shape = SubResource("RectangleShape2D_g7b7a")

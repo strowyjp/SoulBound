@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://cq6lsklk0gv3"]
+
+[ext_resource type="Script" uid="uid://cggkr7actaf6c" path="res://scripts/souls_ui.gd" id="1_fm7sn"]
+[ext_resource type="Texture2D" uid="uid://d3ltqxmbflptm" path="res://assets/UI/Japanese_Hinoki_wood_souls_ui.png" id="2_c36nm"]
+[ext_resource type="FontFile" uid="uid://csqmbla368eoj" path="res://Minecraft.ttf" id="3_c36nm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c36nm"]
+font = ExtResource("3_c36nm")
+font_size = 45
+font_color = Color(0.40392157, 0.26666668, 0.1764706, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_w7uem"]
+font = ExtResource("3_c36nm")
+font_color = Color(0.40392157, 0.26666668, 0.1764706, 1)
+
+[sub_resource type="Gradient" id="Gradient_c36nm"]
+offsets = PackedFloat32Array(0, 0.35, 0.65, 1)
+colors = PackedColorArray(0.1764706, 0.011764706, 0.25882354, 1, 0.1764706, 0.011764706, 0.25882354, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dc1tt"]
+gradient = SubResource("Gradient_c36nm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n2bih"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(96, 1, 1)
+gravity = Vector3(0, -60, 0)
+scale_min = 5.0
+scale_max = 5.0
+color_initial_ramp = SubResource("GradientTexture1D_dc1tt")
+
+[node name="souls_ui" type="CanvasLayer" unique_id=1607638095]
+script = ExtResource("1_fm7sn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1130913819]
+position = Vector2(1335, 67)
+scale = Vector2(8, 8)
+texture = ExtResource("2_c36nm")
+
+[node name="Label" type="Label" parent="." unique_id=1165358342]
+offset_left = 1267.0
+offset_top = 44.0
+offset_right = 1407.0
+offset_bottom = 99.0
+size_flags_horizontal = 4
+text = "0"
+label_settings = SubResource("LabelSettings_c36nm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FloatingLabel" type="Label" parent="." unique_id=469922224]
+offset_left = 1290.0
+offset_top = 47.0
+offset_right = 1380.0
+offset_bottom = 87.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(1.5, 1.5)
+text = "+x"
+label_settings = SubResource("LabelSettings_w7uem")
+horizontal_alignment = 1
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=233325850]
+position = Vector2(1335, 23)
+emitting = false
+amount = 15
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_n2bih")

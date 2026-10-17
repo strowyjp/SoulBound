@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://dy7j3is5v7x8w"]
+
+[ext_resource type="Script" uid="uid://6chn4x6thatg" path="res://scripts/health_bar.gd" id="1_y3kqx"]
+[ext_resource type="Texture2D" uid="uid://vmqgvvt1g21o" path="res://assets/UI/Japanese_wood_health_bar.png" id="2_y3kqx"]
+
+[sub_resource type="Gradient" id="Gradient_6opq1"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.80051047, 0.8005105, 0.80051047, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gyc6d"]
+gradient = SubResource("Gradient_6opq1")
+width = 20
+height = 2
+
+[sub_resource type="Gradient" id="Gradient_y3kqx"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1.5642495e-07, 0.20764193, 0.13200015, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g7b7a"]
+gradient = SubResource("Gradient_y3kqx")
+width = 20
+height = 2
+
+[sub_resource type="Gradient" id="Gradient_tujlf"]
+offsets = PackedFloat32Array(0, 0.35, 0.65, 1)
+colors = PackedColorArray(0.101960786, 0.7019608, 1, 1, 0.101960786, 0.7019608, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vrrwq"]
+gradient = SubResource("Gradient_tujlf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hqkgv"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 6.0
+gravity = Vector3(0, -10, 0)
+color_initial_ramp = SubResource("GradientTexture1D_vrrwq")
+
+[node name="HealthBar" type="CanvasLayer" unique_id=1753694157]
+scale = Vector2(8, 8)
+transform = Transform2D(8, 0, 0, 8, 0, 0)
+script = ExtResource("1_y3kqx")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1923592272]
+offset_left = 8.8
+offset_top = 7.0
+offset_right = 28.8
+offset_bottom = 9.0
+color = Color(0.2901961, 0.19215687, 0.07058824, 1)
+
+[node name="DamageProgressBar" type="TextureProgressBar" parent="." unique_id=1490929661]
+offset_right = 40.0
+offset_bottom = 40.0
+value = 100.0
+texture_progress = SubResource("GradientTexture2D_gyc6d")
+texture_progress_offset = Vector2(9, 7)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=781669695]
+offset_right = 100.0
+offset_bottom = 16.0
+value = 100.0
+texture_under = ExtResource("2_y3kqx")
+texture_progress = SubResource("GradientTexture2D_g7b7a")
+texture_progress_offset = Vector2(9, 7)
+
+[node name="Hitodama" type="ColorRect" parent="TextureProgressBar" unique_id=1816955502]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 7.25
+offset_right = 6.0
+offset_bottom = 9.25
+color = Color(6.3532593e-06, 0.58489037, 0.6095942, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="TextureProgressBar" unique_id=1231404020]
+position = Vector2(5, 8)
+emitting = false
+lifetime = 0.8
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_hqkgv")

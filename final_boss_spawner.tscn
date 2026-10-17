@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://bci0o8cl2aixw"]
+
+[ext_resource type="Script" uid="uid://bxtfv48xrbfhx" path="res://scripts/boss_spawner.gd" id="1_3sti5"]
+[ext_resource type="PackedScene" uid="uid://buu3fxfnemsgr" path="res://scenes/final_boss.tscn" id="2_3sti5"]
+[ext_resource type="Texture2D" uid="uid://dmhciu2u05kwk" path="res://assets/Texture/Extra/TX Props with Shadow.png" id="3_gvn7u"]
+[ext_resource type="FontFile" uid="uid://csqmbla368eoj" path="res://Minecraft.ttf" id="4_p7liu"]
+[ext_resource type="Texture2D" uid="uid://c5e805q6xksp" path="res://assets/UI/Japanese_Hinoki_wood_button.png" id="5_jpx4i"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g7b7a"]
+radius = 13.0
+height = 37.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g7b7a"]
+radius = 80.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g7b7a"]
+texture = ExtResource("5_jpx4i")
+expand_margin_left = 20.0
+expand_margin_top = 40.0
+expand_margin_right = 20.0
+expand_margin_bottom = 40.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gyc6d"]
+texture = ExtResource("5_jpx4i")
+expand_margin_left = 20.0
+expand_margin_top = 40.0
+expand_margin_right = 20.0
+expand_margin_bottom = 40.0
+modulate_color = Color(0.7019608, 0.7019608, 0.7019608, 1)
+
+[node name="BossSpawner" type="Node2D" unique_id=2019074829]
+y_sort_enabled = true
+script = ExtResource("1_3sti5")
+boss_scene = ExtResource("2_3sti5")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=774799953]
+texture = ExtResource("3_gvn7u")
+region_enabled = true
+region_rect = Rect2(445, 21, 38, 72)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1114422849]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=680899799]
+position = Vector2(0, 22.5)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_g7b7a")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=12997150]
+
+[node name="PlayerArea" type="Area2D" parent="." unique_id=1225178965]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea" unique_id=1318158063]
+shape = SubResource("CircleShape2D_g7b7a")
+debug_color = Color(0, 0, 0, 0.42)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=478603637]
+offset = Vector2(1350, 250)
+transform = Transform2D(1, 0, 0, 1, 1350, 250)
+
+[node name="InterectButton" type="Button" parent="CanvasLayer" unique_id=19142235]
+offset_left = -174.0
+offset_top = -50.0
+offset_right = -65.0
+offset_bottom = -27.0
+scale = Vector2(2, 2)
+theme_override_colors/font_color = Color(0.41960785, 0.30588236, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("4_p7liu")
+theme_override_styles/normal = SubResource("StyleBoxTexture_g7b7a")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_gyc6d")
+text = "Summon boss"
+
+[connection signal="body_entered" from="PlayerArea" to="." method="_on_player_area_body_entered"]
+[connection signal="body_exited" from="PlayerArea" to="." method="_on_player_area_body_exited"]
+[connection signal="pressed" from="CanvasLayer/InterectButton" to="." method="_on_interect_button_pressed"]

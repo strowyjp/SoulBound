@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://cnxudfq8pk1ro"]
+
+[ext_resource type="Texture2D" uid="uid://drv5n2ex6mhkw" path="res://assets/UI/Move_Button.png" id="1_puxpd"]
+[ext_resource type="Texture2D" uid="uid://clr63wobmmki" path="res://assets/UI/Attack_Button.png" id="2_puxpd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l81uu"]
+radius = 17.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mge2y"]
+radius = 17.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yg274"]
+radius = 17.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q4wf3"]
+radius = 17.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tvki0"]
+radius = 17.5
+
+[node name="buttons" type="CanvasLayer" unique_id=2019311573]
+
+[node name="right" type="TouchScreenButton" parent="." unique_id=208216194]
+position = Vector2(288, 384)
+scale = Vector2(4, 4)
+texture_normal = ExtResource("1_puxpd")
+shape = SubResource("CircleShape2D_l81uu")
+passby_press = true
+action = "right"
+
+[node name="left" type="TouchScreenButton" parent="." unique_id=1084562254]
+position = Vector2(160, 512)
+rotation = 3.1415927
+scale = Vector2(4, 4)
+texture_normal = ExtResource("1_puxpd")
+shape = SubResource("CircleShape2D_mge2y")
+passby_press = true
+action = "left"
+
+[node name="down" type="TouchScreenButton" parent="." unique_id=1851561104]
+position = Vector2(288, 512)
+rotation = 1.5707964
+scale = Vector2(4, 4)
+texture_normal = ExtResource("1_puxpd")
+shape = SubResource("CircleShape2D_yg274")
+passby_press = true
+action = "down"
+
+[node name="up" type="TouchScreenButton" parent="." unique_id=1359630817]
+position = Vector2(160, 384)
+rotation = 4.712389
+scale = Vector2(4, 4)
+texture_normal = ExtResource("1_puxpd")
+shape = SubResource("CircleShape2D_q4wf3")
+passby_press = true
+action = "up"
+
+[node name="attack" type="TouchScreenButton" parent="." unique_id=603507444]
+position = Vector2(1272, 384)
+scale = Vector2(4, 4)
+texture_normal = ExtResource("2_puxpd")
+shape = SubResource("CircleShape2D_tvki0")
+passby_press = true
+action = "attack"

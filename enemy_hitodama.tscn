@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bojcbjbb4usj5"]
+
+[ext_resource type="Script" uid="uid://bwpuj3igq8syk" path="res://scripts/enemy_hitodama.gd" id="1_i4ln8"]
+
+[sub_resource type="Gradient" id="Gradient_k1rim"]
+offsets = PackedFloat32Array(0, 0.25, 0.6, 1)
+colors = PackedColorArray(0.1764706, 0.011764706, 0.25882354, 1, 0.4822746, 0.12315822, 0.6350498, 0.5, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gyc6d"]
+gradient = SubResource("Gradient_k1rim")
+width = 48
+height = 48
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_t5t6n"]
+colors = PackedColorArray(0.48235294, 0.12156863, 0.63529414, 1, 0.4822746, 0.12315822, 0.6350498, 0.2)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3mg8p"]
+gradient = SubResource("Gradient_t5t6n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i4ln8"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -60, 0)
+color_ramp = SubResource("GradientTexture1D_3mg8p")
+
+[sub_resource type="Gradient" id="Gradient_i4ln8"]
+offsets = PackedFloat32Array(0, 0.15, 0.3, 0.4, 1)
+colors = PackedColorArray(0.07841156, 0.061375566, 0.30998182, 1, 0.29029432, 0.14718863, 0.8410729, 1, 0.12588447, 0.0893042, 0.42986396, 0.3, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i4ln8"]
+gradient = SubResource("Gradient_i4ln8")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="​Onibi" type="GPUParticles2D" unique_id=1046080043]
+texture = SubResource("GradientTexture2D_gyc6d")
+process_material = SubResource("ParticleProcessMaterial_i4ln8")
+script = ExtResource("1_i4ln8")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2049743484]
+scale = Vector2(3, 3)
+energy = 1.5
+range_layer_min = -10
+range_layer_max = 10
+texture = SubResource("GradientTexture2D_i4ln8")

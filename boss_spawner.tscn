@@ -1,0 +1,223 @@
+[gd_scene format=3 uid="uid://d2n2vvv1so6dn"]
+
+[ext_resource type="Texture2D" uid="uid://dmhciu2u05kwk" path="res://assets/Texture/Extra/TX Props with Shadow.png" id="1_2trd2"]
+[ext_resource type="PackedScene" uid="uid://cmrm0ef11pu4s" path="res://scenes/slime_boss.tscn" id="2_ft6eo"]
+
+[sub_resource type="GDScript" id="GDScript_28bik"]
+script/source = "extends Node2D
+
+@export var boss_scene: PackedScene
+
+@onready var player_area: Area2D = $PlayerArea 
+@onready var player = get_tree().get_first_node_in_group(\"player\")
+
+@onready var spawn_areas: Array[Area2D] = [
+	$Area2D_1,
+	$Area2D_2,
+	$Area2D_3,
+	$Area2D_4
+]
+
+var is_player_near: bool = false
+var is_boss_spawned: bool = false
+var can_spawn_boss: bool = true
+
+var occupied_areas: Dictionary = {}
+
+func _ready() -> void:
+	for area in spawn_areas:
+		occupied_areas[area] = null
+		area.body_entered.connect(_on_spawn_area_body_entered.bind(area))
+		
+	_scan_overlapping_enemies()
+
+func _on_spawn_area_body_entered(body: Node2D, area: Area2D) -> void:
+	_process_enemy_entry(body, area)
+
+func _process_enemy_entry(body: Node2D, area: Area2D) -> void:
+	var is_area_empty = occupied_areas[area] == null or not is_instance_valid(occupied_areas[area])
+	var is_enemy = body.is_in_group(\"Enemies\") or body.is_in_group(\"enemies\")
+	
+	if is_enemy and is_area_empty:
+		occupied_areas[area] = body
+		body.global_position = area.global_position
+		
+		body.set_process(false)
+		body.set_physics_process(false)
+		
+		if body.has_node(\"CollisionShape2D\"):
+			body.get_node(\"CollisionShape2D\").set_deferred(\"disabled\", true)
+			
+		check_requirements()
+
+func _scan_overlapping_enemies() -> void:
+	for area in spawn_areas:
+		for body in area.get_overlapping_bodies():
+			_process_enemy_entry(body, area)
+
+func _all_areas_occupied() -> bool:
+	var count = 0
+	for area in spawn_areas:
+		if occupied_areas[area] != null and is_instance_valid(occupied_areas[area]):
+			count += 1
+	return count == spawn_areas.size()
+
+func check_requirements() -> void:
+	if _all_areas_occupied() and can_spawn_boss and not is_boss_spawned:
+		if not boss_scene:
+			return
+		spawn_boss.call_deferred()
+
+func spawn_boss() -> void:
+	is_boss_spawned = true
+	can_spawn_boss = false
+	
+	for area in spawn_areas:
+		var enemy = occupied_areas[area]
+		if is_instance_valid(enemy):
+			enemy.queue_free()
+		occupied_areas[area] = null
+	
+	var boss = boss_scene.instantiate()
+	boss.global_position = global_position
+	boss.scale = Vector2.ZERO
+	
+	get_parent().add_child(boss)
+	
+	
+	boss.tree_exited.connect(_on_boss_died)
+	
+	var health_bar = get_tree().current_scene.find_child(\"SlimeBossHealthBar\", true, false)
+	if health_bar:
+		health_bar.show()
+		health_bar.setup_boss(boss)
+
+	var tween = create_tween()
+	tween.tween_property(boss, \"scale\", Vector2(2.5, 2.5), 0.7).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+func _on_boss_died() -> void:
+	is_boss_spawned = false
+	
+	var health_bar = get_tree().current_scene.find_child(\"SlimeBossHealthBar\", true, false)
+	if health_bar:
+		health_bar.hide()
+		
+	await get_tree().create_timer(300.0).timeout
+	can_spawn_boss = true
+	check_requirements()
+
+func _on_player_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group(\"player\"):
+		player = body
+		is_player_near = true
+
+func _on_player_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group(\"player\"):
+		is_player_near = false
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g7b7a"]
+radius = 13.0
+height = 37.0
+
+[sub_resource type="Gradient" id="Gradient_6qx4q"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gyc6d"]
+gradient = SubResource("Gradient_6qx4q")
+width = 15
+height = 10
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g7b7a"]
+radius = 60.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hfotr"]
+radius = 40.0
+height = 100.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ft6eo"]
+radius = 40.0
+height = 100.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kpybi"]
+radius = 40.0
+height = 100.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ctatt"]
+radius = 40.0
+height = 100.0
+
+[node name="BossSpawner" type="Node2D" unique_id=2019074829]
+y_sort_enabled = true
+script = SubResource("GDScript_28bik")
+boss_scene = ExtResource("2_ft6eo")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=774799953]
+texture = ExtResource("1_2trd2")
+region_enabled = true
+region_rect = Rect2(445, 21, 38, 72)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1114422849]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=680899799]
+position = Vector2(0, 22.5)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_g7b7a")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=12997150]
+
+[node name="ColorRect" type="ColorRect" parent="Node2D" unique_id=950462036]
+offset_left = 1.0
+offset_top = -18.0
+offset_right = 4.0
+offset_bottom = -17.0
+
+[node name="ColorRect2" type="ColorRect" parent="Node2D" unique_id=660517966]
+offset_left = -5.0
+offset_top = -18.0
+offset_right = -2.0
+offset_bottom = -17.0
+
+[node name="PointLight2D" type="PointLight2D" parent="Node2D" unique_id=45722968]
+position = Vector2(-3, -17)
+texture = SubResource("GradientTexture2D_gyc6d")
+
+[node name="PointLight2D2" type="PointLight2D" parent="Node2D" unique_id=722465570]
+position = Vector2(3, -17)
+texture = SubResource("GradientTexture2D_gyc6d")
+
+[node name="PlayerArea" type="Area2D" parent="." unique_id=1225178965]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea" unique_id=1318158063]
+shape = SubResource("CircleShape2D_g7b7a")
+debug_color = Color(0, 0, 0, 0.42)
+
+[node name="Area2D_1" type="Area2D" parent="." unique_id=1174799439]
+position = Vector2(191, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_1" unique_id=2121304788]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_hfotr")
+
+[node name="Area2D_2" type="Area2D" parent="." unique_id=1995759932]
+position = Vector2(-193, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_2" unique_id=248461118]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ft6eo")
+
+[node name="Area2D_3" type="Area2D" parent="." unique_id=1845774916]
+position = Vector2(0, 152)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_3" unique_id=570586079]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_kpybi")
+
+[node name="Area2D_4" type="Area2D" parent="." unique_id=2083301318]
+position = Vector2(0, -105)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_4" unique_id=987318884]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ctatt")
